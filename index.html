@@ -10,5 +10,28 @@
     <h1>Prueba de Suscripcion para cuando se actualize un pedido ...</h1>
     <h1>Prueba de suscripcion para cuando se actualice la ubicacion de un cadete ...</h1>
     <h1>prueba de suscripcion para cuando se actualice el estado de un pedido ...</h1>
+    <script type="module">
+import supabase from "./Scripts/supab_publico.js";
+
+const channel = supabase
+  .channel('pedidos') // El nombre del canal puede ser el que quieras
+  .on(
+    'postgres_changes', 
+    { 
+      event: '*', 
+      schema: 'public', 
+      table: 'Pedido' // ¡Tiene que respetar la mayúscula de tu tabla!
+    }, 
+    (payload) => {
+      console.log('¡Llegó el UPDATE de la base de datos!', payload);
+    }
+  )
+  .subscribe((status) => {
+    // Esto te va a ayudar a saber si se conectó bien al websocket
+    console.log('Estado de la suscripción:', status); 
+  });
+
+console.log('Canal inicializado:', channel);
+    </script>
 </body>
 </html>
