@@ -1,4 +1,4 @@
-import supabase from "./supab_publico.js";
+import supabase from "./supab_publico";
 
 export async function logout() {
     const { error } = await supabase.auth.signOut();
@@ -11,6 +11,6 @@ export async function logout() {
         window.location.href = "/"; 
     }
 }
-document.getElementById("boton_deslogueo").addEventListener("click", async () => {
+document.querySelector("button[aria-label='Desloguear']").addEventListener("click", async () => {
     await logout();
 });

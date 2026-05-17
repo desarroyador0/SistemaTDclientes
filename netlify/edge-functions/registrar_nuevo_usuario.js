@@ -1,7 +1,7 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.94.1/+esm";
 
 const supabaseUrl = 'https://ycemsaofbiaucrpcxbtf.supabase.co';
-const supabaseServiceRoleKey = 'sb_secret_pKWWHs4QUCzQ4i-nYvHIRA_kWBy_DeA';
+const supabaseServiceRoleKey = Deno.env.get("SupabaseKey");
 
 if (!supabaseUrl || !supabaseServiceRoleKey) {
 	throw new Error("Faltan SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY en el entorno.");

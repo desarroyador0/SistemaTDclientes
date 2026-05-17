@@ -1,4 +1,0 @@
-[[edge_functions]]
-function = "registrar_nuevo_usuario"
-path = "/registrar_nuevo_usuario"
-method = "POST"
