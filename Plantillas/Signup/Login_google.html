@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+            .then(reg => console.log('SW registrado', reg))
+            .catch(err => console.error('Error registro SW', err));
+        }
+    </script> 
+    <link rel="manifest" href="/manifest.json" />
+    <title>Document</title>
+</head>
+<body>
+    <button id="boton_google">Registrarse con Google</button>
+    <script src="/Scripts/login_google.js" type="module"></script>
+</body>
+</html>
