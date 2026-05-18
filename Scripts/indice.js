@@ -25,7 +25,32 @@ window.onload = () =>{
             }
             
         } else {
-            return window.location.href = "/Plantillas/Signup/Login_google.html";
+            return;
+        }
+    });
+}
+
+document.getElementById("signInBtn").addEventListener("click",async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: "/"}
+    });
+
+    if (error) {
+        alert("Error al iniciar sesión con Google: " + error.message);
+        return;
+    }
+    if (data?.url) {
+        window.location.href = data.url;
+    } else {
+        alert("Error al iniciar sesión con Google: oauth_url_generation_failed");
+    }
+});
+
+window.onload = () =>{
+    supabase.auth.getSession().then(({data: {session}}) => {
+        if (session) {
+            window.location.href = "/";
         }
     });
 }
