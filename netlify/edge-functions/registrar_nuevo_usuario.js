@@ -22,21 +22,13 @@ export default async function registrar_nuevo_usuario(request) {
         });
     }
 
-    const { id_cliente, nombre_cliente, telefono_cliente, ubicacion_cliente } = await request.json();
-
-    if (!id_cliente || !nombre_cliente || !telefono_cliente || !ubicacion_cliente) {
-        return new Response(JSON.stringify({ error: "Faltan datos requeridos" }), {
-            status: 400,
-            headers: { "content-type": "application/json" },
-        });
-    }
+    const { id_cliente, nombre_cliente, telefono_cliente } = await request.json();
 
     const { error } = await supabase.from("Cliente").insert([
         {
             ID_Cliente: id_cliente,
             Nombre: nombre_cliente,
             Telef: telefono_cliente,
-            Ubicacion_cliente: ubicacion_cliente,
             F_creacion: new Date().toISOString(),
         },
     ]);
