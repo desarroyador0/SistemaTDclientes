@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Delivery | Inicio</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-color: #17181a;
+            --card-bg: #1e2022;
+            --card-soft: rgba(255,255,255,0.03);
+            --text-main: #ffffff;
+            --text-muted: #8e9297;
+            --accent-glow: rgba(255, 69, 0, 0.4);
+            --accent-solid: #ff5722;
+            --accent-soft: rgba(255, 87, 34, 0.14);
+            --btn-shadow-out: -4px -4px 10px rgba(255, 255, 255, 0.03), 4px 4px 10px rgba(0, 0, 0, 0.5);
+            --btn-shadow-in: inset -2px -2px 6px rgba(255, 255, 255, 0.02), inset 2px 2px 6px rgba(0, 0, 0, 0.6);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .light-theme {
+            --bg-color: #e6ebf0;
+            --card-bg: #f3f6f9;
+            --card-soft: rgba(28, 30, 33, 0.04);
+            --text-main: #1c1e21;
+            --text-muted: #65676b;
+            --accent-glow: rgba(255, 87, 34, 0.25);
+            --accent-solid: #e64a19;
+            --accent-soft: rgba(255, 87, 34, 0.12);
+            --btn-shadow-out: -4px -4px 10px rgba(255, 255, 255, 0.8), 4px 4px 10px rgba(165, 175, 190, 0.4);
+            --btn-shadow-in: inset -2px -2px 6px rgba(255, 255, 255, 0.8), inset 2px 2px 6px rgba(165, 175, 190, 0.4);
+            --card-shadow: 0 10px 30px rgba(165, 175, 190, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100dvh;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .neu-card {
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.4s ease;
+        }
+
+        .neu-btn {
+            background: var(--card-bg);
+            box-shadow: var(--btn-shadow-out);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            color: var(--text-main);
+        }
+
+        .neu-btn:active, .neu-btn.active {
+            box-shadow: var(--btn-shadow-in);
+            transform: scale(0.97);
+        }
+
+        .soft-card {
+            background: var(--card-soft);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 22px;
+        }
+
+        .curved-nav-container {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+            width: 100%;
+            height: 95px;
+            margin: 0;
+            z-index: 120;
+            display: block;
+        }
+
+        .curved-nav-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 -5px 15px rgba(0, 0, 0, 0.15));
+        }
+
+        .curved-nav-svg path {
+            fill: var(--card-bg);
+            transition: fill 0.4s ease;
+        }
+
+        .floating-action-container {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .floating-action-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            box-shadow: var(--btn-shadow-out), 0 0 15px var(--accent-glow);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .floating-action-btn:hover {
+            box-shadow: var(--btn-shadow-out), 0 0 25px var(--accent-solid);
+            transform: translateY(-2px);
+        }
+
+        .floating-action-btn i {
+            color: var(--accent-solid);
+            transition: transform 0.3s ease;
+        }
+
+        .floating-action-btn:active {
+            box-shadow: var(--btn-shadow-in);
+            transform: translateY(1px);
+        }
+
+        /* Luces de Estado de Navegación */
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item .nav-icon {
+            color: var(--text-muted);
+            transition: color 0.2s ease;
+        }
+
+        .nav-item.is-active .nav-icon {
+            color: var(--accent-solid) !important;
+        }
+
+        .active-dot-glow {
+            position: absolute;
+            left: 50%;
+            bottom: -6px;
+            width: 5px;
+            height: 5px;
+            background-color: var(--accent-solid);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-solid), 0 0 15px var(--accent-solid);
+            transform: translateX(-50%);
+            display: none;
+        }
+
+        .nav-item.is-active .active-dot-glow {
+            display: block;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 20px;
+        }
+
+        .hero-banner {
+            padding: 24px;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at top right, rgba(255,87,34,0.14), transparent 35%),
+                linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent-solid);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border-radius: 20px;
+            background: var(--card-soft);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .quick-action .icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: var(--accent-soft);
+            color: var(--accent-solid);
+            flex: 0 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .content-area {
+            width: 100%;
+            border-radius: 24px;
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            padding: 1.25rem;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        }
+
+        .light-theme .content-area {
+            border-color: rgba(28, 30, 33, 0.2);
+            background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.45));
+        }
+
+        .map-preview {
+            position: relative;
+            min-height: 260px;
+            border-radius: 24px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 30% 25%, rgba(255,87,34,0.18), transparent 20%),
+                linear-gradient(145deg, rgba(18,19,21,0.95), rgba(8,8,10,0.95));
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .street-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+            opacity: 0.4;
+        }
+
+        .route-line {
+            position: absolute;
+            left: 14%;
+            top: 50%;
+            width: 72%;
+            height: 4px;
+            transform: translateY(-50%);
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(255,87,34,0.1), var(--accent-solid), rgba(255,87,34,0.1));
+            box-shadow: 0 0 20px rgba(255,87,34,0.35);
+        }
+
+        .route-marker {
+            position: absolute;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: var(--accent-solid);
+            box-shadow: 0 0 16px rgba(255,87,34,0.5);
+        }
+
+        .route-marker.origin {
+            left: 14%;
+        }
+
+        .route-marker.destination {
+            left: 86%;
+        }
+
+        .route-marker.rider {
+            left: 44%;
+            width: 22px;
+            height: 22px;
+            animation: floatRide 5s ease-in-out infinite;
+        }
+
+        @keyframes floatRide {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            50% { transform: translate(-50%, -50%) translateY(-6px); }
+        }
+
+        .stat-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .metric-card {
+            padding: 18px;
+            border-radius: 20px;
+            background: var(--card-soft);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .metric-card strong {
+            display: block;
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .metric-card p,
+        .soft-card p,
+        .history-item p,
+        .recommendation-item p {
+            color: var(--text-muted);
+        }
+
+        .horizontal-list {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .horizontal-list::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .horizontal-list::-webkit-scrollbar-thumb {
+            background: var(--card-bg);
+            border-radius: 999px;
+        }
+
+        .chip-card {
+            min-width: 150px;
+            padding: 16px;
+            border-radius: 20px;
+            background: var(--card-soft);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .history-item,
+        .recommendation-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px;
+            border-radius: 18px;
+            background: var(--card-soft);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .history-item strong,
+        .recommendation-item strong {
+            .floating-action-btn i {
+                color: var(--accent-solid);
+                transition: transform 0.3s ease;
+            }
+
+            .floating-action-btn:active {
+                box-shadow: var(--btn-shadow-in);
+                transform: translateY(1px);
+            }
+
+            /* Luces de Estado de Navegación */
+            .nav-item {
+                position: relative;
+            }
+
+            .nav-item .nav-icon {
+                color: var(--text-muted);
+                transition: color 0.2s ease;
+            }
+
+            .nav-item.is-active .nav-icon {
+                color: var(--accent-solid) !important;
+            }
+
+            .active-dot-glow {
+                position: absolute;
+                left: 50%;
+                bottom: -6px;
+                width: 5px;
+                height: 5px;
+                background-color: var(--accent-solid);
+                border-radius: 50%;
+                box-shadow: 0 0 8px var(--accent-solid), 0 0 15px var(--accent-solid);
+                transform: translateX(-50%);
+                display: none;
+            }
+
+            .nav-item.is-active .active-dot-glow {
+                display: block;
+            }
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .service-card {
+            padding: 18px;
+            border-radius: 20px;
+            background: var(--card-soft);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .service-card strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .toast-notification {
+            position: fixed;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%) translateY(150px);
+            background: rgba(30, 32, 34, 0.9);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Ocultar la barra de desplazamiento pero permitir el scroll */
+        body {
+            -ms-overflow-style: none; /* IE 10+ */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        ::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        /* Añadir espacio seguro para que la barra no cubra contenido */
+        .mobile-fullscreen-panel {
+            padding-bottom: 120px;
+        }
+
+        @media (max-width: 1023px) {
+            .mobile-fullscreen-panel {
+                min-height: 100dvh;
+                border-radius: 0;
+                border-left: 0;
+                border-right: 0;
+            }
+        }
+            .hero-grid,
+            .service-grid,
+            .stat-strip {
+                grid-template-columns: 1fr;
+            }
+
+        @media (max-width: 640px) {
+            .quick-action,
+            .history-item,
+            .recommendation-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .content-area {
+                min-height: 34vh;
+            }
+        }
+    </style>
+    <script src="loader-redirect.js"></script>
+</head>
+<body>
+    <div class="min-h-screen w-full flex flex-col">
+        <div class="w-full flex flex-col neu-card overflow-hidden relative mobile-fullscreen-panel lg:mx-0">
+            <div class="flex justify-between items-center px-6 pt-8 pb-4">
+                <div class="w-12 h-12 neu-btn" onclick="showToast('Abriendo navegación principal')">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="w-12 h-12 neu-btn relative" onclick="showToast('Tienes 2 ofertas activas y un cupón disponible')">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span class="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></span>
+                    </div>
+                    <div class="w-12 h-12 neu-btn" id="theme-toggle" onclick="toggleTheme()" title="Cambiar Tema">
+                        <i data-lucide="sun-moon" class="w-5 h-5"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="px-6 flex-1 flex flex-col gap-5 pb-4">
+                <section class="hero-grid">
+                    <article class="hero-banner neu-card">
+                        <span class="badge">Inicio del cliente</span>
+                        <h1 class="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+                            Enviá paquetes, documentos y pedidos con una experiencia premium.
+                        </h1>
+                        <p class="mt-4 text-sm md:text-base" style="color: var(--text-muted)">
+                            Todo Delivery organiza tu operación como una app de primer nivel: rápido, claro y listo para seguimiento en vivo.
+                        </p>
+
+                        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div class="quick-action">
+                                <div class="icon-wrap"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                                <div>
+                                    <strong>Tu dirección</strong>
+                                    <p class="text-sm">Av. Libertador 1530</p>
+                                </div>
+                            </div>
+                            <div class="quick-action">
+                                <div class="icon-wrap"><i data-lucide="clock-3" class="w-5 h-5"></i></div>
+                                <div>
+                                    <strong>Entrega rápida</strong>
+                                    <p class="text-sm">Rider estimado en 12 min</p>
+                                </div>
+                            </div>
+                            <div class="quick-action">
+                                <div class="icon-wrap"><i data-lucide="wallet" class="w-5 h-5"></i></div>
+                                <div>
+                                    <strong>Pago listo</strong>
+                                    <p class="text-sm">Mercado Pago habilitado</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <aside class="neu-card p-5 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-xs uppercase tracking-widest" style="color: var(--text-muted)">Acción rápida</p>
+                                <h2 class="section-title mt-1">Solicitar delivery</h2>
+                            </div>
+                            <span class="tag-pill">Express</span>
+                        </div>
+
+                        <div class="content-area">
+                            <div class="text-left space-y-4">
+                                <div>
+                                    <label class="block text-sm mb-2" style="color: var(--text-muted)">Destino</label>
+                                    <div class="soft-card px-4 py-3">Ignacio de la Roza Oeste 542</div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm mb-2" style="color: var(--text-muted)">Receptor</label>
+                                    <div class="soft-card px-4 py-3">Sofía Pérez · 264 555 0192</div>
+                                </div>
+                                <button class="w-full mt-2 py-3 rounded-2xl font-bold neu-btn" style="border-radius: 18px;" onclick="showToast('Abriendo flujo de pedido express')">
+                                    Continuar con el pedido
+                                </button>
+                            </div>
+                        </div>
+                    </aside>
+                </section>
+
+                <section class="stat-strip">
+                    <div class="metric-card neu-card">
+                        <strong>124</strong>
+                        <p>Envíos hoy</p>
+                    </div>
+                    <div class="metric-card neu-card">
+                        <strong>16 min</strong>
+                        <p>Tiempo promedio</p>
+                    </div>
+                    <div class="metric-card neu-card">
+                        <strong>97.8%</strong>
+                        <p>Entregas a tiempo</p>
+                    </div>
+                </section>
+
+                <section class="service-grid">
+                    <article class="neu-card p-5 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-xs uppercase tracking-widest" style="color: var(--text-muted)">Estado en vivo</p>
+                                <h2 class="section-title mt-1">Tu pedido actual</h2>
+                            </div>
+                            <span class="tag-pill">En camino</span>
+                        </div>
+
+                        <div class="map-preview mb-4">
+                            <div class="street-grid"></div>
+                            <div class="route-line"></div>
+                            <div class="route-marker origin"></div>
+                            <div class="route-marker rider"></div>
+                            <div class="route-marker destination"></div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="soft-card p-4">
+                                <p class="text-xs uppercase tracking-wide" style="color: var(--text-muted)">Distancia</p>
+                                <strong class="text-lg">4.2 km</strong>
+                            </div>
+                            <div class="soft-card p-4">
+                                <p class="text-xs uppercase tracking-wide" style="color: var(--text-muted)">ETA</p>
+                                <strong class="text-lg">18 min</strong>
+                            </div>
+                            <div class="soft-card p-4">
+                                <p class="text-xs uppercase tracking-wide" style="color: var(--text-muted)">Precio</p>
+                                <strong class="text-lg">$3.200</strong>
+                            </div>
+                            <div class="soft-card p-4">
+                                <p class="text-xs uppercase tracking-wide" style="color: var(--text-muted)">Pago</p>
+                                <strong class="text-lg">Mercado Pago</strong>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="neu-card p-5 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-xs uppercase tracking-widest" style="color: var(--text-muted)">Accesos rápidos</p>
+                                <h2 class="section-title mt-1">Tus herramientas</h2>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="recommendation-item">
+                                <div>
+                                    <strong>Repetir último pedido</strong>
+                                    <p>Un toque para volver a enviar a la misma dirección.</p>
+                                </div>
+                                <span class="tag-pill">1 click</span>
+                            </div>
+                            <div class="recommendation-item">
+                                <div>
+                                    <strong>Programar envío</strong>
+                                    <p>Define día y hora para una entrega futura.</p>
+                                </div>
+                                <span class="tag-pill">Planificar</span>
+                            </div>
+                            <div class="recommendation-item">
+                                <div>
+                                    <strong>Compartir seguimiento</strong>
+                                    <p>Envia el estado del viaje a quien recibe el paquete.</p>
+                                </div>
+                                <span class="tag-pill">GPS</span>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="service-grid">
+                    <article class="neu-card p-5 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-xs uppercase tracking-widest" style="color: var(--text-muted)">Frecuentes</p>
+                                <h2 class="section-title mt-1">Destinos recientes</h2>
+                            </div>
+                        </div>
+
+                        <div class="horizontal-list">
+                            <div class="chip-card">
+                                <strong>Centro</strong>
+                                <p class="text-sm">Oficinas y comercios</p>
+                            </div>
+                            <div class="chip-card">
+                                <strong>Universidad</strong>
+                                <p class="text-sm">Documentos y paquetes</p>
+                            </div>
+                            <div class="chip-card">
+                                <strong>San Martín</strong>
+                                <p class="text-sm">Entregas express</p>
+                            </div>
+                            <div class="chip-card">
+                                <strong>Hospital</strong>
+                                <p class="text-sm">Envíos prioritarios</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="neu-card p-5 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-xs uppercase tracking-widest" style="color: var(--text-muted)">Capacidades</p>
+                                <h2 class="section-title mt-1">Lo que ofrece la app</h2>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="service-card">
+                                <strong>Seguimiento en vivo</strong>
+                                <p>Mapa, rider, ETA y estados operativos del pedido.</p>
+                            </div>
+                            <div class="service-card">
+                                <strong>Pagos flexibles</strong>
+                                <p>Tarjeta, efectivo, wallet y cobros integrados listos para escalar.</p>
+                            </div>
+                            <div class="service-card">
+                                <strong>Soporte inteligente</strong>
+                                <p>Cancelaciones, incidencias y ayuda para cliente y rider.</p>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="neu-card p-5 md:p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <p class="text-xs uppercase tracking-widest" style="color: var(--text-muted)">Actividad reciente</p>
+                            <h2 class="section-title mt-1">Últimos movimientos</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="history-item">
+                            <div>
+                                <strong>Pedido #2031 entregado</strong>
+                                <p>Hoy 15:42 · Moto · Repartidor Lucas Gómez</p>
+                            </div>
+                            <span class="tag-pill">Entregado</span>
+                        </div>
+                        <div class="history-item">
+                            <div>
+                                <strong>Pedido #2034 en viaje</strong>
+                                <p>Hoy 12:22 · Auto · ETA 7 min</p>
+                            </div>
+                            <span class="tag-pill">Tracking</span>
+                        </div>
+                        <div class="history-item">
+                            <div>
+                                <strong>Pedido #2028 programado</strong>
+                                <p>Ayer 19:10 · Entrega para mañana 10:00</p>
+                            </div>
+                            <span class="tag-pill">Programado</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- SECCIÓN INFERIOR: LA COPA CURVA NEUMÓRFICA EXACTA -->
+            <div class="curved-nav-container mt-4">
+                <svg class="curved-nav-svg" viewBox="0 0 375 95" preserveAspectRatio="none">
+                    <!-- Curvatura exacta del diseño original con beziers orgánicos -->
+                    <path d="M 0 25 
+                             L 135 25 
+                             C 152 25, 155 60, 187.5 60 
+                             C 220 60, 223 25, 240 25 
+                             L 375 25 
+                             L 375 95 
+                             L 0 95 Z" />
+                </svg>
+
+                <!-- Botón Central Flotante '+' con iluminación -->
+                <div class="floating-action-container">
+                    <div class="floating-action-btn" onclick="window.location.href='RealizarPedido.html'">
+                        <i data-lucide="plus" class="w-7 h-7" id="plus-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Iconos de Navegación Distribuidos en la Curva -->
+                <div class="absolute inset-0 flex justify-between items-center px-8 pt-4 z-0">
+                    <!-- Home -->
+                    <div class="flex flex-col items-center justify-center cursor-pointer w-10 h-10 nav-item" data-nav="home" onclick="window.location.href='inicio.html'">
+                        <i data-lucide="home" class="w-5 h-5 transition-colors nav-icon"></i>
+                        <span class="active-dot-glow"></span>
+                    </div>
+
+                    <!-- Zap / Energía -->
+                    <div class="flex flex-col items-center justify-center cursor-pointer w-10 h-10 mr-12 nav-item" data-nav="orders" onclick="window.location.href='Pedidos.html'">
+                        <i data-lucide="zap" class="w-5 h-5 transition-colors nav-icon"></i>
+                        <span class="active-dot-glow"></span>
+                    </div>
+
+                    <!-- Map Pin (Activo con brillo naranja/rojo por debajo como en la foto) -->
+                    <div class="flex flex-col items-center justify-center cursor-pointer w-10 h-10 ml-12 nav-item" data-nav="tracking" onclick="window.location.href='dashboardv1.html'">
+                        <i data-lucide="map-pin" class="w-5 h-5 transition-colors nav-icon"></i>
+                        <span class="active-dot-glow"></span>
+                    </div>
+
+                    <!-- User -->
+                    <div class="flex flex-col items-center justify-center cursor-pointer w-10 h-10 nav-item" data-nav="profile" onclick="window.location.href='Perfil.html'">
+                        <i data-lucide="user" class="w-5 h-5 transition-colors nav-icon"></i>
+                        <span class="active-dot-glow"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="toast-notif" class="toast-notification">
+        <i data-lucide="info" class="w-5 h-5 text-blue-400"></i>
+        <span id="toast-message">Notificación</span>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const navRoutes = {
+            'inicio.html': 'home',
+            'Pedidos.html': 'orders',
+            'dashboardv1.html': 'tracking',
+            'Perfil.html': 'profile',
+            'RealizarPedido.html': 'action'
+        };
+
+        const currentPage = window.location.pathname.split('/').pop() || 'inicio.html';
+        const activeNav = navRoutes[currentPage];
+
+        document.querySelectorAll('[data-nav]').forEach((item) => {
+            item.classList.toggle('is-active', item.dataset.nav === activeNav);
+        });
+
+        // Cargar tema guardado al iniciar la página
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('appTheme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+            } else {
+                document.body.classList.remove('light-theme');
+            }
+        }
+
+        // Aplicar tema guardado al cargar
+        loadTheme();
+
+        function toggleTheme() {
+            const body = document.body;
+            const hasLightTheme = body.classList.toggle('light-theme');
+            localStorage.setItem('appTheme', hasLightTheme ? 'light' : 'dark');
+            showToast(hasLightTheme ? 'Modo claro activado' : 'Modo oscuro activado');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notif');
+            const msgSpan = document.getElementById('toast-message');
+            msgSpan.innerText = message;
+            toast.classList.add('show');
+
+            window.clearTimeout(window.__toastTimer);
+            window.__toastTimer = window.setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
