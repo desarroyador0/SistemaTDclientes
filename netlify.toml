@@ -2,3 +2,7 @@
 function = "registrar_nuevo_usuario"
 path = "/registrar_nuevo_usuario"
 method = "POST"
+[[edge_functions]]
+function = "realizar_nuevo_pedido"
+path = "/realizar_nuevo_pedido"
+method = "POST"

@@ -1,13 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard | Nuevo pedido</title>
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+    >
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 24px;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        form {
+            display: grid;
+            gap: 16px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        label {
+            display: grid;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            font: inherit;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        textarea {
+            min-height: 96px;
+            resize: vertical;
+        }
+
+        #mapa {
+            height: 320px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+        }
+
+        .fila-doble {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        #boton_pedido,
+        #boton_deslogueo {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 18px;
+            cursor: pointer;
+        }
+
+        #boton_pedido {
+            background: #0f766e;
+            color: #fff;
+        }
+
+        #boton_deslogueo {
+            background: #e2e8f0;
+            color: #0f172a;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 16px;
+            }
+
+            .fila-doble {
+                grid-template-columns: 1fr;
+            }
+
+            #mapa {
+                height: 260px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Bienvenido al Dashboard</h1>
-    <button id="boton_deslogueo">Cerrar Sesión</button>
+    <main>
+        <h1>Bienvenido al Dashboard</h1>
+        <button id="boton_deslogueo" type="button">Cerrar Sesión</button>
+        <form id="form_pedido">
+            <label>
+                Información del pedido
+                <textarea id="info_pedido" name="info_pedido" placeholder="Describe lo que necesitas enviar" required></textarea>
+            </label>
+
+            <div class="fila-doble">
+                <label>
+                    Tipo de paquete
+                    <select id="tipo_paquete" name="tipo_paquete" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="pequeno">Pequeño</option>
+                        <option value="mediano">Mediano</option>
+                        <option value="grande">Grande</option>
+                    </select>
+                </label>
+
+                <label>
+                    Tipo de vehículo solicitado
+                    <select id="tipo_vehiculo" name="tipo_vehiculo" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="moto">Moto</option>
+                        <option value="carro">Carro</option>
+                    </select>
+                </label>
+            </div>
+
+            <div>
+                <label>Ubicación de destino</label>
+                <div id="mapa"></div>
+                <input type="hidden" id="latitud_destino" name="latitud_destino">
+                <input type="hidden" id="longitud_destino" name="longitud_destino">
+                <p id="texto_ubicacion" style="margin: 8px 0 0; color: #475569;">Toca el mapa para marcar el destino.</p>
+            </div>
+
+            <div class="acciones">
+                <span id="coordenadas_destino" style="color: #475569;">Sin ubicación seleccionada</span>
+                <button id="boton_pedido" type="submit">Realizar Pedido</button>
+            </div>
+        </form>
+    </main>
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    ></script>
     <script type="module" src="/Scripts/Dashboard.js">
     </script>
 </body>
