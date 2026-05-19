@@ -1,4 +1,5 @@
 import supabase from "./supab_publico.js";
+
 window.addEventListener('load', () => {
     supabase.auth.getUser().then(async ({data: {user}}) => {
         if (user) {
@@ -12,8 +13,9 @@ window.addEventListener('load', () => {
                 alert("Error al obtener datos del usuario: " + error.message);
                 return;
             }
+
             if (!data) {
-                const telef = await registerPhoneIfMissing(data?.Telef || localStorage.getItem('telefono_cliente'));
+                const telef = await registerPhoneIfMissing();
                 if (telef === null) {
                     alert('Registro cancelado. Se requiere teléfono para crear el usuario.');
                     return;
@@ -56,17 +58,12 @@ window.addEventListener('load', () => {
 });
 
 
-async function registerPhoneIfMissing(existingPhone = null){
-    const stored = (existingPhone || localStorage.getItem('telefono_cliente') || '').toString().trim();
-    if (stored) return stored;
-
-    while (true) {
-        const input = prompt("Por favor, introduce tu teléfono (solo números):");
-        if (input === null) return null; // usuario canceló
-        const telefono = input.trim();
-        if (/^[0-9+\- ]{6,20}$/.test(telefono)) return telefono;
-        alert('Número no válido. Introduce entre 6 y 20 caracteres numéricos, + o - permitidos.');
-    }
+async function registerPhoneIfMissing(){
+    const input = prompt("Por favor, introduce tu teléfono (solo números):");
+    if (input === null) return null; // usuario canceló
+    const telefono = input.trim();
+    if (/^[0-9+\- ]{6,20}$/.test(telefono)) return telefono;
+    alert('Número no válido. Introduce entre 6 y 20 caracteres numéricos, + o - permitidos.');
 }
 
 document.getElementById("signInBtn").addEventListener("click",async () => {
