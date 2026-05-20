@@ -39,8 +39,10 @@ window.addEventListener('load', () => {
                 localStorage.setItem('telefono_cliente', telef);
                 localStorage.setItem('id_cliente', user.id);
                 localStorage.setItem('nombre_cliente', nombre);
+                localStorage.setItem('fecha_union_cliente', new Date().toISOString());
+                localStorage.setItem('foto_cliente', user?.user_metadata?.avatar_url || user?.metadata?.avatar_url || user?.avatar_url || '');
 
-                return window.location.href = "/Plantillas/Dashboard_SPA.html";
+                return window.location.href = "/Plantillas/Dashboard.html";
             }
             else{
                 sessionStorage.clear();
@@ -48,7 +50,8 @@ window.addEventListener('load', () => {
                 localStorage.setItem("nombre_cliente", data.Nombre);
                 localStorage.setItem("telefono_cliente", data.Telef);
                 localStorage.setItem("fecha_union_cliente", data.F_creacion);
-                return window.location.href = "/Plantillas/Dashboard_SPA.html";
+                    localStorage.setItem('foto_cliente', user.user_metadata?.avatar_url || user.metadata?.avatar_url || user.avatar_url || '');
+                return window.location.href = "/Plantillas/Dashboard.html";
             }
             
         } else {

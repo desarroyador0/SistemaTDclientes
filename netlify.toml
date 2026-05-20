@@ -6,3 +6,7 @@ method = "POST"
 function = "realizar_nuevo_pedido"
 path = "/realizar_nuevo_pedido"
 method = "POST"
+[[edge_functions]]
+function = "eliminar_cuenta_cliente"
+path = "/eliminar_cuenta_cliente"
+method = "POST"

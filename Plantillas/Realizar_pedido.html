@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Nuevo pedido</title>
-    <link
+    <title>Document</title>
+        <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -118,10 +118,7 @@
     </style>
 </head>
 <body>
-    <main>
-        <h1>Bienvenido al Dashboard</h1>
-        <button id="boton_deslogueo" type="button">Cerrar Sesión</button>
-        <form id="form_pedido">
+    <form id="form_pedido">
             <label>
                 Información del pedido
                 <textarea id="info_pedido" name="info_pedido" placeholder="Describe lo que necesitas enviar" required></textarea>
@@ -151,6 +148,8 @@
             <div>
                 <label>Ubicación de destino</label>
                 <div id="mapa"></div>
+                <input type="hidden" id="latitud_recogida" name="latitud_recogida">
+                <input type="hidden" id="longitud_recogida" name="longitud_recogida">
                 <input type="hidden" id="latitud_destino" name="latitud_destino">
                 <input type="hidden" id="longitud_destino" name="longitud_destino">
                 <p id="texto_ubicacion" style="margin: 8px 0 0; color: #475569;">Toca el mapa para marcar el destino.</p>
@@ -167,7 +166,6 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""
     ></script>
-    <script type="module" src="/Scripts/Dashboard.js">
-    </script>
+    <script src="/Scripts/realizar_pedido.js" type="module"></script>
 </body>
 </html>
