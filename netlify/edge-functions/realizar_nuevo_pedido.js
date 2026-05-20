@@ -21,7 +21,7 @@ export default async function realizar_nuevo_pedido(request) {
             headers: { "content-type": "application/json" },
         });
     }
-    const { id_cliente, descripcion_pedido, tipo_v, tipo_paquete, ubi_formt} = await request.json();
+    const { id_cliente, descripcion_pedido, tipo_v, tipo_paquete, ubi_dest_formt, ubi_reco_formt } = await request.json();
 
     const { error } = await supabase.from("Pedido").insert([
         {
@@ -29,7 +29,8 @@ export default async function realizar_nuevo_pedido(request) {
             Info_Pedido: descripcion_pedido,
             Tipo_v_solicitado: tipo_v,
             Tipo_paquete: tipo_paquete,
-            Ubi_Destino: ubi_formt
+            Ubi_Destino: ubi_dest_formt,
+            Ubi_recogida: ubi_reco_formt
         }
     ]);
 
