@@ -148,7 +148,9 @@ async function handleExistingUser(){
         localStorage.setItem('telefono_cliente', telef);
         localStorage.setItem('id_cliente', user.id);
         localStorage.setItem('nombre_cliente', nombre);
-        window.location.href = '/Plantillas/Dashboard_SPA.html';
+        const target = '/base.html?view=inicio';
+        if (window.top && window.top !== window.self) window.top.location.href = target;
+        else window.location.href = target;
       }
       return;
     }
@@ -159,7 +161,9 @@ async function handleExistingUser(){
     localStorage.setItem('nombre_cliente', cliente.Nombre);
     localStorage.setItem('telefono_cliente', cliente.Telef);
     localStorage.setItem('fecha_union_cliente', cliente.F_creacion);
-    window.location.href = '/Plantillas/Dashboard_SPA.html';
+    const target = '/base.html?view=inicio';
+    if (window.top && window.top !== window.self) window.top.location.href = target;
+    else window.location.href = target;
 
   } catch(e){
     console.warn('Error en flujo de usuario existente:', e);

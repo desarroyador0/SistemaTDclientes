@@ -42,7 +42,7 @@ window.addEventListener('load', () => {
                 localStorage.setItem('fecha_union_cliente', new Date().toISOString());
                 localStorage.setItem('foto_cliente', user?.user_metadata?.avatar_url || user?.metadata?.avatar_url || user?.avatar_url || '');
 
-                return window.location.href = "/Plantillas/Dashboard.html";
+                return window.location.href = "/base.html?view=inicio";
             }
             else{
                 sessionStorage.clear();
@@ -51,7 +51,7 @@ window.addEventListener('load', () => {
                 localStorage.setItem("telefono_cliente", data.Telef);
                 localStorage.setItem("fecha_union_cliente", data.F_creacion);
                     localStorage.setItem('foto_cliente', user.user_metadata?.avatar_url || user.metadata?.avatar_url || user.avatar_url || '');
-                return window.location.href = "/Plantillas/Dashboard.html";
+                return window.location.href = "/base.html?view=inicio";
             }
             
         } else {
@@ -69,10 +69,11 @@ async function registerPhoneIfMissing(){
     alert('Número no válido. Introduce entre 6 y 20 caracteres numéricos, + o - permitidos.');
 }
 
-document.getElementById("signInBtn").addEventListener("click",async () => {
+const signInBtn = document.getElementById("signInBtn");
+if (signInBtn) signInBtn.addEventListener("click",async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: "/"}
+        options: { redirectTo: "/base.html?view=registro"}
     });
 
     if (error) {

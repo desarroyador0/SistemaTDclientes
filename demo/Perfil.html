@@ -3,177 +3,567 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Neumorphic Dashboard & GPS Tracker</title>
-    
-    <!-- Tailwind CSS para la maquetación rápida -->
+    <title>Perfil y herramientas | Todo Delivery</title>
+
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
-    <!-- Fuentes premium de Google (Inter para un estilo de interfaz limpio) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Iconos vectoriales nítidos (Lucide) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Variables de Tema: Neumorfismo Mate Oscuro por defecto */
         :root {
-            --bg-color: #17181a;
-            --card-bg: #1e2022;
-            --text-main: #ffffff;
-            --text-muted: #8e9297;
-            --accent-glow: rgba(255, 69, 0, 0.4);
-            --accent-solid: #ff5722;
-            --btn-shadow-out: -4px -4px 10px rgba(255, 255, 255, 0.03), 4px 4px 10px rgba(0, 0, 0, 0.5);
-            --btn-shadow-in: inset -2px -2px 6px rgba(255, 255, 255, 0.02), inset 2px 2px 6px rgba(0, 0, 0, 0.6);
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            color-scheme: dark;
+            --bg-color: #111316;
+            --bg-gradient: radial-gradient(circle at top left, rgba(255, 122, 69, 0.15), transparent 32%), radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 24%), linear-gradient(180deg, #15181c 0%, #111316 100%);
+            --card-bg: rgba(21, 24, 28, 0.86);
+            --card-bg-strong: #161920;
+            --text-main: #f7f9fb;
+            --text-muted: #98a1ab;
+            --line-color: rgba(255, 255, 255, 0.08);
+            --accent-solid: #ff6a3d;
+            --accent-soft: rgba(255, 106, 61, 0.16);
+            --accent-glow: rgba(255, 106, 61, 0.35);
+            --success: #38bdf8;
+            --ok: #34d399;
+            --warning: #fbbf24;
+            --danger: #fb7185;
+            --shadow-soft: 0 22px 70px rgba(0, 0, 0, 0.35);
+            --shadow-card: 0 14px 40px rgba(0, 0, 0, 0.22);
         }
 
-        /* Variables de Tema Claro (Vidrio Claro / Neumorfismo Soft) */
         .light-theme {
-            --bg-color: #e6ebf0;
-            --card-bg: #f3f6f9;
-            --text-main: #1c1e21;
-            --text-muted: #65676b;
-            --accent-glow: rgba(255, 87, 34, 0.25);
-            --accent-solid: #e64a19;
-            --btn-shadow-out: -4px -4px 10px rgba(255, 255, 255, 0.8), 4px 4px 10px rgba(165, 175, 190, 0.4);
-            --btn-shadow-in: inset -2px -2px 6px rgba(255, 255, 255, 0.8), inset 2px 2px 6px rgba(165, 175, 190, 0.4);
-            --card-shadow: 0 10px 30px rgba(165, 175, 190, 0.2);
+            color-scheme: light;
+            --bg-color: #eff3f7;
+            --bg-gradient: radial-gradient(circle at top left, rgba(255, 122, 69, 0.18), transparent 30%), radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent 24%), linear-gradient(180deg, #f4f7fa 0%, #edf2f7 100%);
+            --card-bg: rgba(255, 255, 255, 0.84);
+            --card-bg-strong: #ffffff;
+            --text-main: #12161c;
+            --text-muted: #5f6873;
+            --line-color: rgba(17, 24, 39, 0.08);
+            --accent-solid: #ea5a2a;
+            --accent-soft: rgba(234, 90, 42, 0.1);
+            --accent-glow: rgba(234, 90, 42, 0.22);
+            --success: #0ea5e9;
+            --ok: #10b981;
+            --warning: #d97706;
+            --danger: #e11d48;
+            --shadow-soft: 0 18px 50px rgba(15, 23, 42, 0.08);
+            --shadow-card: 0 10px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
             margin: 0;
             min-height: 100dvh;
-            background-color: var(--bg-color);
+            background: var(--bg-gradient);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            transition: background 0.35s ease, color 0.35s ease;
             overflow-x: hidden;
         }
 
-        /* Estilos Neumórficos */
-        .neu-card {
-            background: var(--card-bg);
-            border-radius: 28px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.4s ease;
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 36px 36px;
+            mask-image: radial-gradient(circle at center, rgba(0,0,0,0.9), rgba(0,0,0,0));
+            opacity: 0.45;
         }
 
-        .neu-btn {
+        .app-shell {
+            position: relative;
+            width: min(1180px, calc(100% - 1.5rem));
+            margin: 0 auto;
+        }
+
+        .panel-shell {
+            backdrop-filter: blur(18px);
             background: var(--card-bg);
-            box-shadow: var(--btn-shadow-out);
-            border-radius: 50%;
-            display: flex;
+            border: 1px solid var(--line-color);
+            border-radius: 32px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--line-color);
+            box-shadow: var(--shadow-card);
+            border-radius: 26px;
+            backdrop-filter: blur(18px);
+        }
+
+        .soft-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            border-radius: 9999px;
+            padding: 0.45rem 0.8rem;
+            background: var(--accent-soft);
+            color: var(--accent-solid);
+            font-size: 0.8125rem;
+            font-weight: 700;
+        }
+
+        .icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--line-color);
+            background: rgba(255,255,255,0.02);
+            color: var(--text-main);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .pill-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border-radius: 16px;
+            padding: 0.8rem 1rem;
+            font-weight: 700;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .pill-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .pill-primary {
+            background: linear-gradient(135deg, var(--accent-solid), #ff8a5b);
+            color: #fff;
+            box-shadow: 0 16px 30px var(--accent-glow);
+        }
+
+        .pill-secondary {
+            background: rgba(255,255,255,0.03);
+            color: var(--text-main);
+            border: 1px solid var(--line-color);
+        }
+
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.55;
+        }
+
+        .profile-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            padding: 1.25rem;
+            background:
+                radial-gradient(circle at top left, rgba(255, 122, 69, 0.26), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.12), transparent 22%),
+                linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid var(--line-color);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .profile-hero::before {
+            content: '';
+            position: absolute;
+            inset: auto -12% -45% auto;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 106, 61, 0.22), transparent 70%);
+            pointer-events: none;
+        }
+
+        .profile-hero-grid {
+            position: relative;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .profile-ident {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .profile-badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .profile-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.48rem 0.75rem;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--line-color);
+            font-size: 0.82rem;
+            font-weight: 700;
             color: var(--text-main);
         }
 
-        .neu-btn:active, .neu-btn.active {
-            box-shadow: var(--btn-shadow-in);
-            transform: scale(0.97);
+        .profile-stats {
+            display: grid;
+            gap: 0.75rem;
         }
 
-        /* Curva Orgánica de la Barra de Navegación Inferior (Idéntica a la imagen)
-           Ahora fijada abajo y por encima del contenido */
+        .profile-card-grid {
+            display: grid;
+            gap: 0.85rem;
+        }
+
+        .profile-detail-card {
+            border-radius: 24px;
+            padding: 1rem;
+            border: 1px solid var(--line-color);
+            background: rgba(255,255,255,0.03);
+        }
+
+        .hero-label {
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .hero-value {
+            margin-top: 0.35rem;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+        }
+
+        .accordion-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .accordion-item {
+            overflow: hidden;
+        }
+
+        .accordion-summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.1rem;
+            outline: none;
+        }
+
+        .accordion-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .accordion-summary::-moz-list-bullet {
+            list-style-type: none;
+        }
+
+        .accordion-summary:focus-visible {
+            box-shadow: inset 0 0 0 2px var(--accent-solid);
+        }
+
+        .accordion-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .accordion-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            width: fit-content;
+            padding: 0.28rem 0.65rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--accent-solid);
+            background: var(--accent-soft);
+        }
+
+        .accordion-title-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .accordion-summary-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.55rem 0.85rem;
+            border-radius: 14px;
+            border: 1px solid var(--line-color);
+            color: var(--text-main);
+            background: rgba(255,255,255,0.02);
+            font-size: 0.9rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .accordion-body {
+            border-top: 1px solid var(--line-color);
+            padding: 1rem 1.1rem 1.1rem;
+        }
+
+        .accordion-item[open] .accordion-summary-action i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-item[open] .accordion-summary-action {
+            background: var(--accent-soft);
+            border-color: transparent;
+            color: var(--accent-solid);
+        }
+
+        .field-label {
+            display: block;
+            margin-bottom: 0.45rem;
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-field,
+        .select-field,
+        .textarea-field {
+            width: 100%;
+            border-radius: 18px;
+            border: 1px solid var(--line-color);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-main);
+            padding: 0.95rem 1rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .input-field:focus,
+        .select-field:focus,
+        .textarea-field:focus {
+            border-color: var(--accent-solid);
+            box-shadow: 0 0 0 4px var(--accent-soft);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .textarea-field {
+            min-height: 138px;
+            resize: vertical;
+        }
+
+        .input-hint {
+            margin-top: 0.45rem;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+        }
+
+        .avatar-frame {
+            width: 96px;
+            height: 96px;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid var(--line-color);
+            background: linear-gradient(135deg, rgba(255, 106, 61, 0.2), rgba(255,255,255,0.03));
+            display: grid;
+            place-items: center;
+        }
+
+        .avatar-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .payment-card {
+            border-radius: 24px;
+            padding: 1rem;
+            border: 1px solid var(--line-color);
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        }
+
+        .payment-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.65rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.06);
+            color: var(--text-main);
+        }
+
+        .toggle-track {
+            position: relative;
+            width: 58px;
+            height: 34px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.28);
+            border: 1px solid var(--line-color);
+            transition: background 0.25s ease;
+        }
+
+        .toggle-track input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform 0.22s ease;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+        }
+
+        .toggle-track input:checked + .toggle-thumb {
+            transform: translateX(24px);
+        }
+
+        .toggle-track:has(input:checked) {
+            background: rgba(16, 185, 129, 0.28);
+        }
+
+        .support-thread {
+            max-height: 260px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-right: 0.2rem;
+        }
+
+        .bubble {
+            max-width: 88%;
+            border-radius: 18px;
+            padding: 0.8rem 0.95rem;
+            line-height: 1.5;
+            font-size: 0.92rem;
+        }
+
+        .bubble.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--accent-solid), #ff8a5b);
+            color: #fff;
+            border-bottom-right-radius: 6px;
+        }
+
+        .bubble.agent {
+            align-self: flex-start;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--line-color);
+            color: var(--text-main);
+            border-bottom-left-radius: 6px;
+        }
+
         .curved-nav-container {
             position: fixed;
             left: 0;
             right: 0;
             bottom: 0;
-            background: transparent;
             width: 100%;
-            height: 95px;
-            margin: 0;
+            height: 96px;
             z-index: 120;
-            display: block;
+            pointer-events: none;
         }
 
         .curved-nav-svg {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 -5px 15px rgba(0, 0, 0, 0.15));
+            filter: drop-shadow(0 -10px 25px rgba(0, 0, 0, 0.22));
         }
 
         .curved-nav-svg path {
-            fill: var(--card-bg);
-            transition: fill 0.4s ease;
+            fill: var(--card-bg-strong);
+            transition: fill 0.35s ease;
         }
 
-        /* Botón Central Flotante con Brillo */
-        .floating-action-container {
+        .nav-layer {
             position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
+            inset: 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            align-items: center;
+            padding: 1.15rem 2rem 1rem;
+            pointer-events: auto;
         }
 
-        .floating-action-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            box-shadow: var(--btn-shadow-out), 0 0 15px var(--accent-glow);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+        .nav-item {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .floating-action-btn:hover {
-            box-shadow: var(--btn-shadow-out), 0 0 25px var(--accent-solid);
-            transform: translateY(-2px);
-        }
-
-        .floating-action-btn i {
-            color: var(--accent-solid);
-            transition: transform 0.3s ease;
-        }
-
-        .floating-action-btn:active {
-            box-shadow: var(--btn-shadow-in);
-            transform: translateY(1px);
-        }
-
-        /* Luces de Estado de Navegación */
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-item .nav-icon {
+            width: 44px;
+            height: 44px;
+            margin: 0 auto;
             color: var(--text-muted);
-            transition: color 0.2s ease;
+            transition: transform 0.2s ease, color 0.2s ease;
         }
 
-        .nav-item.is-active .nav-icon {
-            color: var(--accent-solid) !important;
+        .nav-item:hover {
+            transform: translateY(-1px);
+            color: var(--text-main);
         }
 
-        .floating-action-btn .nav-icon {
-            color: var(--accent-solid) !important;
+        .nav-item.is-active {
+            color: var(--accent-solid);
         }
 
         .active-dot-glow {
             position: absolute;
             left: 50%;
-            bottom: -6px;
+            bottom: -7px;
             width: 5px;
             height: 5px;
-            background-color: var(--accent-solid);
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-solid), 0 0 15px var(--accent-solid);
+            background: var(--accent-solid);
+            box-shadow: 0 0 8px var(--accent-solid), 0 0 14px var(--accent-solid);
             transform: translateX(-50%);
             display: none;
         }
@@ -182,172 +572,526 @@
             display: block;
         }
 
-        .content-area {
-            width: 100%;
-            min-height: 46vh;
-            border-radius: 24px;
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem 1.25rem;
-            margin-top: 0.5rem;
-            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        .floating-action-container {
+            position: absolute;
+            left: 50%;
+            top: -16px;
+            transform: translateX(-50%);
+            pointer-events: auto;
         }
 
-        .light-theme .content-area {
-            border-color: rgba(28, 30, 33, 0.2);
-            background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.45));
+        .floating-action-btn {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent-solid), #ff8a5b);
+            box-shadow: 0 18px 30px rgba(255, 106, 61, 0.32);
+            border: 0;
+            transition: transform 0.2s ease;
         }
 
-        /* Notificación Flotante Estilizada */
+        .floating-action-btn:hover {
+            transform: translateY(-2px);
+        }
+
         .toast-notification {
             position: fixed;
-            bottom: 110px;
             left: 50%;
-            transform: translateX(-50%) translateY(150px);
-            background: rgba(30, 32, 34, 0.9);
-            backdrop-filter: blur(10px);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 1000;
+            bottom: 118px;
+            transform: translateX(-50%) translateY(140px);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.7rem;
+            padding: 0.85rem 1rem;
+            border-radius: 16px;
+            background: rgba(10, 14, 18, 0.9);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.32);
+            z-index: 999;
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .toast-notification.show {
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Personalización de scrollbar para mantener sobriedad */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-color);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--card-bg);
-            border-radius: 10px;
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(4, 8, 12, 0.58);
+            backdrop-filter: blur(10px);
+            z-index: 200;
         }
 
-        /* Evitar que la barra inferior tape el contenido: espacio seguro */
-        .mobile-fullscreen-panel {
-            padding-bottom: 120px;
+        .modal-backdrop.is-open {
+            display: flex;
+        }
+
+        .modal-panel {
+            width: min(520px, 100%);
+            border-radius: 28px;
+            padding: 1.25rem;
+            background: var(--card-bg-strong);
+            border: 1px solid var(--line-color);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .safe-bottom {
+            padding-bottom: 128px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.35);
+            border-radius: 999px;
         }
 
         @media (max-width: 1023px) {
-            .mobile-fullscreen-panel {
-                min-height: 100dvh;
-                border-radius: 0;
-                border-left: 0;
-                border-right: 0;
+            .app-shell {
+                width: calc(100% - 0.85rem);
+            }
+
+            .panel-shell {
+                border-radius: 26px;
+            }
+
+            .safe-bottom {
+                padding-bottom: 122px;
             }
         }
     </style>
     <script src="loader-redirect.js"></script>
 </head>
 <body>
+    <div class="min-h-screen w-full">
+        <main class="app-shell py-4 md:py-6 lg:py-8 safe-bottom">
+            <section class="panel-shell overflow-hidden">
+                <header class="px-4 sm:px-6 lg:px-8 pt-5 pb-4 border-b" style="border-color: var(--line-color);">
+                    <div class="flex items-center justify-between mb-5">
+                        <button class="icon-btn" type="button" onclick="window.location.href='inicio.html'" aria-label="Volver al inicio">
+                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <button class="icon-btn relative" type="button" onclick="showToast('No hay nuevas alertas de soporte')" aria-label="Notificaciones">
+                                <i data-lucide="bell" class="w-5 h-5"></i>
+                                <span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full" style="background: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);"></span>
+                            </button>
+                            <button id="theme-toggle" class="icon-btn" type="button" title="Cambiar tema" aria-label="Cambiar tema">
+                                <i data-lucide="settings" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
 
-    <!-- Contenedor Principal -->
-    <div class="min-h-screen w-full flex flex-col">
-        <div class="w-full flex flex-col neu-card overflow-hidden relative mobile-fullscreen-panel lg:mx-0">
-            
-            <!-- Encabezado Superior de Botones Neumórficos -->
-            <div class="flex justify-between items-center px-6 pt-8 pb-4">
-                <div class="w-12 h-12 neu-btn" onclick="showToast('Regresando al menú principal...')">
-                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+                        <div class="space-y-3">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="soft-chip"><i data-lucide="shield-check" class="w-4 h-4"></i>Centro de control del usuario</span>
+                                <span class="inline-flex items-center gap-2 text-sm font-semibold" style="color: var(--text-muted);">
+                                    <span class="w-2.5 h-2.5 rounded-full" style="background: var(--ok); box-shadow: 0 0 14px var(--ok);"></span>
+                                    Cuenta verificada y lista para operar
+                                </span>
+                            </div>
+                            <div>
+                                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Perfil y herramientas</h1>
+                                <p class="section-subtitle mt-2 max-w-2xl">Una interfaz limpia, confiable y pensada para que el usuario gestione sus datos, pagos, soporte y configuración sin fricción.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:w-[360px]">
+                            <div class="mini-metric">
+                                <div class="text-xs uppercase tracking-[0.18em] font-bold" style="color: var(--text-muted);">Entregas</div>
+                                <div class="mt-1 text-2xl font-extrabold">18</div>
+                                <div class="mt-1 text-sm" style="color: var(--text-muted);">realizadas este mes</div>
+                            </div>
+                            <div class="mini-metric">
+                                <div class="text-xs uppercase tracking-[0.18em] font-bold" style="color: var(--text-muted);">Soporte</div>
+                                <div class="mt-1 text-2xl font-extrabold">24/7</div>
+                                <div class="mt-1 text-sm" style="color: var(--text-muted);">respuesta asistida</div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="px-4 sm:px-6 lg:px-8 py-5">
+                    <section class="profile-hero">
+                        <div class="profile-hero-grid lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                            <div class="profile-ident">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="soft-chip"><i data-lucide="sparkles" class="w-4 h-4"></i>Perfil activo al instante</span>
+                                    <span class="inline-flex items-center gap-2 text-sm font-semibold" style="color: var(--text-muted);">
+                                        <span class="w-2.5 h-2.5 rounded-full" style="background: var(--ok); box-shadow: 0 0 14px var(--ok);"></span>
+                                        Diseño centrado en tu cuenta
+                                    </span>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                                    <div class="avatar-frame">
+                                        <img id="profile-photo" class="avatar-photo hidden" alt="Foto de perfil">
+                                        <div id="avatar-fallback" class="text-center">
+                                            <div class="text-3xl font-extrabold" style="color: var(--accent-solid);">TD</div>
+                                            <div class="text-xs font-semibold uppercase tracking-[0.18em]" style="color: var(--text-muted);">Cliente</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-3">
+                                        <div>
+                                            <h1 class="text-3xl sm:text-4xl font-black tracking-tight">María López</h1>
+                                            <p class="section-subtitle mt-2 max-w-2xl">Tu identidad, tus datos de contacto y tu acceso directo a soporte, todo en un mismo lugar, claro y rápido.</p>
+                                        </div>
+
+                                        <div class="profile-badge-row">
+                                            <span class="profile-badge"><i data-lucide="phone" class="w-4 h-4"></i>+54 11 5555 4321</span>
+                                            <span class="profile-badge"><i data-lucide="mail" class="w-4 h-4"></i>maria.lopez@tododelivery.com</span>
+                                            <span class="profile-badge"><i data-lucide="shield-check" class="w-4 h-4"></i>Verificado</span>
+                                        </div>
+
+                                        <div class="hero-actions">
+                                            <button type="button" class="pill-btn pill-primary" onclick="document.getElementById('profile-details').open = true; document.getElementById('profile-details').scrollIntoView({behavior: 'smooth', block: 'start'});">
+                                                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                                Editar datos
+                                            </button>
+                                            <button type="button" class="pill-btn pill-secondary" onclick="showToast('Perfil preparado para sincronizar con backend')">
+                                                <i data-lucide="activity" class="w-4 h-4"></i>
+                                                Ver estado
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="profile-stats">
+                                <div class="profile-detail-card">
+                                    <div class="hero-label">Estado de cuenta</div>
+                                    <div class="hero-value">Activa y lista</div>
+                                    <p class="input-hint mt-2">La cuenta está verificada y preparada para operar pedidos y soporte.</p>
+                                </div>
+                                <div class="profile-card-grid">
+                                    <div class="profile-detail-card">
+                                        <div class="hero-label">Último acceso</div>
+                                        <div class="hero-value">Hoy, 08:24</div>
+                                    </div>
+                                    <div class="profile-detail-card">
+                                        <div class="hero-label">Métodos de pago</div>
+                                        <div class="hero-value">2 guardados</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="accordion-stack">
+                        <details id="profile-details" class="glass-card accordion-item" open>
+                            <summary class="accordion-summary">
+                                <div class="accordion-meta">
+                                    <span class="accordion-kicker"><i data-lucide="user-round" class="w-3.5 h-3.5"></i>Datos personales</span>
+                                    <div class="accordion-title-row">
+                                        <div class="section-title">Tu información principal</div>
+                                        <span class="payment-chip"><i data-lucide="badge-check" class="w-4 h-4"></i>Perfil activo</span>
+                                    </div>
+                                    <p class="section-subtitle max-w-2xl">Foto, nombre, teléfono validado y correo. Tocá para ver o editar los datos.</p>
+                                </div>
+                                <span class="accordion-summary-action">Ver más <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i></span>
+                            </summary>
+                            <div class="accordion-body">
+                                <div class="grid gap-5 md:grid-cols-[180px_1fr]">
+                                    <div class="space-y-4">
+                                        <div class="avatar-frame">
+                                            <img id="profile-photo" class="avatar-photo hidden" alt="Foto de perfil">
+                                            <div id="avatar-fallback" class="text-center">
+                                                <div class="text-3xl font-extrabold" style="color: var(--accent-solid);">TD</div>
+                                                <div class="text-xs font-semibold uppercase tracking-[0.18em]" style="color: var(--text-muted);">Cliente</div>
+                                            </div>
+                                        </div>
+                                        <label class="pill-btn pill-secondary w-full cursor-pointer">
+                                            <i data-lucide="camera" class="w-4 h-4"></i>
+                                            Cambiar foto
+                                            <input id="photo-input" type="file" accept="image/*" class="hidden">
+                                        </label>
+                                        <p class="input-hint">Usá una imagen clara para mejorar la identificación en pedidos y soporte.</p>
+                                    </div>
+
+                                    <form id="profile-form" class="space-y-4">
+                                        <div class="grid gap-4 sm:grid-cols-2">
+                                            <div>
+                                                <label class="field-label" for="profile-name">Nombre y apellido</label>
+                                                <input id="profile-name" class="input-field" type="text" placeholder="Ej. María López" autocomplete="name" required>
+                                            </div>
+                                            <div>
+                                                <label class="field-label" for="profile-phone">Teléfono</label>
+                                                <input id="profile-phone" class="input-field" type="tel" placeholder="Ej. +54 11 5555 4321" autocomplete="tel" required>
+                                                <p id="phone-helper" class="input-hint">Acepta entre 8 y 15 dígitos. Se recomienda incluir código de país.</p>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="field-label" for="profile-email">Correo electrónico</label>
+                                            <input id="profile-email" class="input-field" type="email" placeholder="usuario@correo.com" autocomplete="email" required>
+                                        </div>
+
+                                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2">
+                                            <div class="text-sm" style="color: var(--text-muted);">Los cambios se aplican sólo en esta interfaz hasta conectar el backend.</div>
+                                            <button type="submit" class="pill-btn pill-primary">
+                                                <i data-lucide="save" class="w-4 h-4"></i>
+                                                Guardar datos
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </details>
+
+                        <details class="glass-card accordion-item">
+                            <summary class="accordion-summary">
+                                <div class="accordion-meta">
+                                    <span class="accordion-kicker"><i data-lucide="credit-card" class="w-3.5 h-3.5"></i>Pagos</span>
+                                    <div class="accordion-title-row">
+                                        <div class="section-title">Métodos guardados</div>
+                                        <span class="payment-chip"><i data-lucide="wallet" class="w-4 h-4"></i>2 tarjetas</span>
+                                    </div>
+                                    <p class="section-subtitle max-w-2xl">Gestioná tarjetas de crédito o débito y definí cuál queda como principal.</p>
+                                </div>
+                                <span class="accordion-summary-action">Ver más <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i></span>
+                            </summary>
+                            <div class="accordion-body space-y-4">
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                    <p class="section-subtitle">La lista se mantiene compacta. Abrí esta sección sólo cuando quieras revisar o cambiar una tarjeta.</p>
+                                    <button id="open-card-modal" type="button" class="pill-btn pill-secondary shrink-0">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                        Agregar tarjeta
+                                    </button>
+                                </div>
+                                <div id="payment-list" class="grid gap-3"></div>
+                            </div>
+                        </details>
+
+                        <details class="glass-card accordion-item">
+                            <summary class="accordion-summary">
+                                <div class="accordion-meta">
+                                    <span class="accordion-kicker"><i data-lucide="message-square-more" class="w-3.5 h-3.5"></i>Soporte</span>
+                                    <div class="accordion-title-row">
+                                        <div class="section-title">Centro de ayuda</div>
+                                        <span class="payment-chip"><i data-lucide="phone-call" class="w-4 h-4"></i>WhatsApp</span>
+                                    </div>
+                                    <p class="section-subtitle max-w-2xl">Accedé a soporte humano, reclamos de pedidos y chat interno cuando lo necesites.</p>
+                                </div>
+                                <span class="accordion-summary-action">Ver más <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i></span>
+                            </summary>
+                            <div class="accordion-body space-y-4">
+                                <div class="grid gap-3 sm:grid-cols-2">
+                                    <a id="whatsapp-support" class="pill-btn pill-primary w-full" target="_blank" rel="noreferrer">
+                                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                        WhatsApp
+                                    </a>
+                                    <button id="quick-support-open" type="button" class="pill-btn pill-secondary w-full">
+                                        <i data-lucide="messages-square" class="w-4 h-4"></i>
+                                        Chat interno
+                                    </button>
+                                </div>
+
+                                <div class="rounded-[24px] p-4" style="background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border: 1px solid var(--line-color);">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background: var(--accent-soft); color: var(--accent-solid);">
+                                            <i data-lucide="life-buoy" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold">Reclamos de pedidos</div>
+                                            <div class="text-sm" style="color: var(--text-muted);">Responde con un agente o abre WhatsApp con el contexto del pedido.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="support-chat" class="hidden space-y-3">
+                                    <div class="support-thread glass-card p-4" style="box-shadow: none;">
+                                        <div class="bubble agent">Hola, soy el asistente de soporte. Contame qué pasó con tu pedido y te ayudamos a resolverlo.</div>
+                                    </div>
+                                    <form id="support-form" class="flex gap-2">
+                                        <textarea id="support-message" class="textarea-field flex-1" placeholder="Escribí tu reclamo o consulta..."></textarea>
+                                        <button type="submit" class="pill-btn pill-primary self-end h-[52px] px-5">
+                                            <i data-lucide="send" class="w-4 h-4"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </details>
+
+                        <details class="glass-card accordion-item">
+                            <summary class="accordion-summary">
+                                <div class="accordion-meta">
+                                    <span class="accordion-kicker"><i data-lucide="settings-2" class="w-3.5 h-3.5"></i>Configuración</span>
+                                    <div class="accordion-title-row">
+                                        <div class="section-title">Seguridad y preferencias</div>
+                                        <span class="payment-chip"><i data-lucide="shield" class="w-4 h-4"></i>Notificaciones</span>
+                                    </div>
+                                    <p class="section-subtitle max-w-2xl">Cambiar contraseña, activar alertas push y ajustar el modo claro/oscuro.</p>
+                                </div>
+                                <span class="accordion-summary-action">Ver más <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i></span>
+                            </summary>
+                            <div class="accordion-body">
+                                <form id="password-form" class="space-y-4">
+                                    <div>
+                                        <label class="field-label" for="current-password">Contraseña actual</label>
+                                        <input id="current-password" class="input-field" type="password" placeholder="Ingresá tu contraseña actual" autocomplete="current-password">
+                                    </div>
+                                    <div class="grid gap-4 sm:grid-cols-2">
+                                        <div>
+                                            <label class="field-label" for="new-password">Nueva contraseña</label>
+                                            <input id="new-password" class="input-field" type="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password">
+                                        </div>
+                                        <div>
+                                            <label class="field-label" for="repeat-password">Repetir contraseña</label>
+                                            <input id="repeat-password" class="input-field" type="password" placeholder="Confirmar contraseña" autocomplete="new-password">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-1">
+                                        <p class="input-hint">Usá una contraseña nueva si notás actividad sospechosa o querés reforzar la cuenta.</p>
+                                        <button type="submit" class="pill-btn pill-secondary">
+                                            <i data-lucide="key-round" class="w-4 h-4"></i>
+                                            Actualizar
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div class="mt-6 space-y-4">
+                                    <div class="flex items-center justify-between gap-4">
+                                        <div>
+                                            <div class="font-bold">Notificaciones push</div>
+                                            <div class="text-sm" style="color: var(--text-muted);">Recibir alertas de entrega, estado de pedido y soporte.</div>
+                                        </div>
+                                        <label class="toggle-track" aria-label="Activar notificaciones push">
+                                            <input id="push-toggle" type="checkbox" checked>
+                                            <span class="toggle-thumb"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="flex items-center justify-between gap-4">
+                                        <div>
+                                            <div class="font-bold">Modo claro / oscuro</div>
+                                            <div class="text-sm" style="color: var(--text-muted);">Usá el botón superior derecho para alternar el tema sin perder contexto.</div>
+                                        </div>
+                                        <span class="payment-chip"><i data-lucide="paintbrush-2" class="w-4 h-4"></i>Toggle activo</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
                 </div>
-                <div class="flex gap-4">
-                    <div class="w-12 h-12 neu-btn relative" onclick="showToast('No hay nuevas alertas de telemetría')">
-                        <i data-lucide="bell" class="w-5 h-5"></i>
-                        <span class="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse"></span>
-                    </div>
-                    <!-- Botón de Configuración: Alterna Tema Claro / Oscuro Soberbio -->
-                    <div class="w-12 h-12 neu-btn" id="theme-toggle" onclick="toggleTheme()" title="Cambiar Tema">
-                        <i data-lucide="settings" class="w-5 h-5"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contenido Principal sin datos de prueba -->
-            <div class="px-6 flex-1 flex flex-col gap-5">
-                <div class="content-area">
-                    <div>
-                        <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Dashboard Principal</h1>
-                        <p class="mt-3 text-sm md:text-base" style="color: var(--text-muted)">
-                            Estructura limpia lista para conectar datos reales.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-          <!-- SECCIÓN INFERIOR: LA COPA CURVA NEUMÓRFICA EXACTA -->
-            <div class="curved-nav-container mt-4">
-                <svg class="curved-nav-svg" viewBox="0 0 375 95" preserveAspectRatio="none">
-                    <!-- Curvatura exacta del diseño original con beziers orgánicos -->
-                    <path d="M 0 25 
-                             L 135 25 
-                             C 152 25, 155 60, 187.5 60 
-                             C 220 60, 223 25, 240 25 
-                             L 375 25 
-                             L 375 95 
-                             L 0 95 Z" />
-                </svg>
-
-                <!-- Botón Central Flotante '+' con iluminación -->
-                <div class="floating-action-container">
-                    <div class="floating-action-btn" onclick="window.location.href='RealizarPedido.html'">
-                        <i data-lucide="plus" class="w-7 h-7" id="plus-icon"></i>
-                    </div>
-                </div>
-
-                <!-- Iconos de Navegación Distribuidos en la Curva -->
-                <div class="absolute inset-0 flex justify-between items-center px-8 pt-4 z-0">
-                    <!-- Home -->
-                    <div class="flex flex-col items-center justify-center cursor-pointer w-10 h-10 nav-item" data-nav="home" onclick="window.location.href='inicio.html'">
-                        <i data-lucide="home" class="w-5 h-5 transition-colors nav-icon"></i>
-                        <span class="active-dot-glow"></span>
-                    </div>
-
-                    <!-- Zap / Energía -->
-                    <div class="flex flex-col items-center justify-center cursor-pointer w-10 h-10 mr-12 nav-item" data-nav="orders" onclick="window.location.href='Pedidos.html'">
-                        <i data-lucide="zap" class="w-5 h-5 transition-colors nav-icon"></i>
-                        <span class="active-dot-glow"></span>
-                    </div>
-
-                    <!-- Map Pin (Activo con brillo naranja/rojo por debajo como en la foto) -->
-                    <div class="flex flex-col items-center justify-center cursor-pointer w-10 h-10 ml-12 nav-item" data-nav="tracking" onclick="window.location.href='dashboardv1.html'">
-                        <i data-lucide="map-pin" class="w-5 h-5 transition-colors nav-icon"></i>
-                        <span class="active-dot-glow"></span>
-                    </div>
-
-                    <!-- User -->
-                    <div class="flex flex-col items-center justify-center cursor-pointer w-10 h-10 nav-item" data-nav="profile" onclick="window.location.href='Perfil.html'">
-                        <i data-lucide="user" class="w-5 h-5 transition-colors nav-icon"></i>
-                        <span class="active-dot-glow"></span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+            </section>
+        </main>
     </div>
 
-    <!-- Toast de Notificaciones Personalizadas (Sin usar Alert de navegador) -->
-    <div id="toast-notif" class="toast-notification">
-        <i data-lucide="info" class="w-5 h-5 text-blue-400"></i>
+    <div class="curved-nav-container">
+        <svg class="curved-nav-svg" viewBox="0 0 375 96" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M 0 24 L 135 24 C 153 24, 156 60, 187.5 60 C 219 60, 222 24, 240 24 L 375 24 L 375 96 L 0 96 Z"></path>
+        </svg>
+
+        <div class="floating-action-container">
+            <button class="floating-action-btn" type="button" onclick="window.location.href='RealizarPedido.html'" aria-label="Realizar nuevo pedido">
+                <i data-lucide="plus" class="w-7 h-7"></i>
+            </button>
+        </div>
+
+        <nav class="nav-layer" aria-label="Navegación principal">
+            <button class="nav-item" type="button" data-nav="home" aria-label="Inicio" onclick="window.location.href='inicio.html'">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span class="active-dot-glow"></span>
+            </button>
+            <button class="nav-item" type="button" data-nav="orders" aria-label="Pedidos" onclick="window.location.href='Pedidos.html'">
+                <i data-lucide="zap" class="w-5 h-5"></i>
+                <span class="active-dot-glow"></span>
+            </button>
+            <button class="nav-item" type="button" data-nav="tracking" aria-label="Seguimiento" onclick="window.location.href='dashboardv1.html'">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                <span class="active-dot-glow"></span>
+            </button>
+            <button class="nav-item" type="button" data-nav="profile" aria-label="Perfil" onclick="window.location.href='Perfil.html'">
+                <i data-lucide="user" class="w-5 h-5"></i>
+                <span class="active-dot-glow"></span>
+            </button>
+        </nav>
+    </div>
+
+    <div id="toast-notif" class="toast-notification" role="status" aria-live="polite">
+        <i data-lucide="info" class="w-5 h-5"></i>
         <span id="toast-message">Notificación</span>
     </div>
 
+    <div id="card-modal" class="modal-backdrop" aria-hidden="true">
+        <div class="modal-panel">
+            <div class="flex items-start justify-between gap-4">
+                <div>
+                    <div class="section-title">Agregar tarjeta</div>
+                    <p class="section-subtitle mt-1">Guardá un nuevo método de pago para acelerar tus próximos pedidos.</p>
+                </div>
+                <button id="close-card-modal" type="button" class="icon-btn" aria-label="Cerrar">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="card-form" class="space-y-4 mt-5">
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <div>
+                        <label class="field-label" for="card-name">Alias</label>
+                        <input id="card-name" class="input-field" type="text" placeholder="Ej. Visa personal" required>
+                    </div>
+                    <div>
+                        <label class="field-label" for="card-brand">Marca</label>
+                        <select id="card-brand" class="select-field" required>
+                            <option value="Visa">Visa</option>
+                            <option value="Mastercard">Mastercard</option>
+                            <option value="Amex">American Express</option>
+                            <option value="Débito">Débito</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="field-label" for="card-number">Número de tarjeta</label>
+                    <input id="card-number" class="input-field" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" required>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-3">
+                    <div>
+                        <label class="field-label" for="card-expiry">Vencimiento</label>
+                        <input id="card-expiry" class="input-field" type="text" placeholder="MM/AA" required>
+                    </div>
+                    <div>
+                        <label class="field-label" for="card-holder">Titular</label>
+                        <input id="card-holder" class="input-field" type="text" placeholder="Nombre en la tarjeta" required>
+                    </div>
+                    <div>
+                        <label class="field-label" for="card-cvv">CVV</label>
+                        <input id="card-cvv" class="input-field" type="password" inputmode="numeric" placeholder="123" maxlength="4" required>
+                    </div>
+                </div>
+                <label class="flex items-center gap-3 text-sm font-semibold" style="color: var(--text-muted);">
+                    <input id="card-default" type="checkbox" class="w-4 h-4" checked>
+                    Establecer como método principal
+                </label>
+                <div class="flex flex-col sm:flex-row gap-3 justify-end pt-1">
+                    <button id="cancel-card-modal" type="button" class="pill-btn pill-secondary">Cancelar</button>
+                    <button type="submit" class="pill-btn pill-primary">
+                        <i data-lucide="credit-card" class="w-4 h-4"></i>
+                        Guardar tarjeta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Inicializar Iconos Lucide
         lucide.createIcons();
 
         const navRoutes = {
@@ -365,57 +1109,303 @@
             item.classList.toggle('is-active', item.dataset.nav === activeNav);
         });
 
-        let actionOpen = false;
+        const profilePhoto = document.getElementById('profile-photo');
+        const avatarFallback = document.getElementById('avatar-fallback');
+        const photoInput = document.getElementById('photo-input');
+        const profileForm = document.getElementById('profile-form');
+        const profileName = document.getElementById('profile-name');
+        const profilePhone = document.getElementById('profile-phone');
+        const profileEmail = document.getElementById('profile-email');
+        const phoneHelper = document.getElementById('phone-helper');
+        const pushToggle = document.getElementById('push-toggle');
+        const supportChat = document.getElementById('support-chat');
+        const quickSupportOpen = document.getElementById('quick-support-open');
+        const supportForm = document.getElementById('support-form');
+        const supportMessage = document.getElementById('support-message');
+        const supportThread = document.querySelector('.support-thread');
+        const whatsappSupport = document.getElementById('whatsapp-support');
+        const paymentList = document.getElementById('payment-list');
+        const openCardModal = document.getElementById('open-card-modal');
+        const cardModal = document.getElementById('card-modal');
+        const closeCardModal = document.getElementById('close-card-modal');
+        const cancelCardModal = document.getElementById('cancel-card-modal');
+        const cardForm = document.getElementById('card-form');
+        const cardName = document.getElementById('card-name');
+        const cardBrand = document.getElementById('card-brand');
+        const cardNumber = document.getElementById('card-number');
+        const cardExpiry = document.getElementById('card-expiry');
+        const cardHolder = document.getElementById('card-holder');
+        const cardCvv = document.getElementById('card-cvv');
+        const cardDefault = document.getElementById('card-default');
 
-        // Cargar tema guardado al iniciar la página
+        const supportNumber = '5491112345678';
+
+        let themeTimer = null;
+        let paymentCards = [
+            {
+                id: 1,
+                name: 'Visa Personal',
+                brand: 'Visa',
+                number: '4532 7814 9012 4431',
+                expiry: '11/28',
+                holder: 'María López',
+                primary: true
+            },
+            {
+                id: 2,
+                name: 'Mastercard Pyme',
+                brand: 'Mastercard',
+                number: '5129 6641 8820 7714',
+                expiry: '07/27',
+                holder: 'María López',
+                primary: false
+            }
+        ];
+
+        const messageFeed = [
+            { role: 'agent', text: 'Hola, soy el asistente de soporte. Contame qué pasó con tu pedido y te ayudamos a resolverlo.' }
+        ];
+
         function loadTheme() {
             const savedTheme = localStorage.getItem('appTheme');
-            if (savedTheme === 'light') {
-                document.body.classList.add('light-theme');
-            } else {
-                document.body.classList.remove('light-theme');
-            }
+            document.body.classList.toggle('light-theme', savedTheme === 'light');
         }
-
-        // Aplicar tema guardado al cargar
-        loadTheme();
 
         function toggleTheme() {
-            const body = document.body;
-            const hasLightTheme = body.classList.toggle('light-theme');
+            const hasLightTheme = document.body.classList.toggle('light-theme');
             localStorage.setItem('appTheme', hasLightTheme ? 'light' : 'dark');
-
-            if (hasLightTheme) {
-                showToast("Modo Claro Activado");
-            } else {
-                showToast("Modo Oscuro Activado");
-            }
+            showToast(hasLightTheme ? 'Modo claro activado' : 'Modo oscuro activado');
         }
 
-        function toggleMainAction() {
-            actionOpen = !actionOpen;
-            const plusIcon = document.getElementById('plus-icon');
-            const routeBtn = document.getElementById('route-mode-btn');
-
-            plusIcon.style.transform = actionOpen ? 'rotate(45deg)' : 'rotate(0deg)';
-            routeBtn.style.boxShadow = actionOpen
-                ? 'var(--btn-shadow-in), 0 0 15px rgba(255, 69, 0, 0.6)'
-                : 'var(--btn-shadow-out), 0 0 15px var(--accent-glow)';
-
-            showToast(actionOpen ? 'Acción principal activa' : 'Acción principal cerrada');
-        }
-
-        // Notificaciones Flotantes Integradas (Sin bloquear el iFrame)
         function showToast(message) {
             const toast = document.getElementById('toast-notif');
             const msgSpan = document.getElementById('toast-message');
             msgSpan.innerText = message;
             toast.classList.add('show');
 
-            setTimeout(() => {
+            clearTimeout(themeTimer);
+            themeTimer = setTimeout(() => {
                 toast.classList.remove('show');
-            }, 3500);
+            }, 3200);
         }
+
+        function normalizePhone(value) {
+            return value.replace(/[^\d+]/g, '').replace(/(?!^)[+]/g, '');
+        }
+
+        function isValidPhone(value) {
+            const digits = value.replace(/\D/g, '');
+            return digits.length >= 8 && digits.length <= 15;
+        }
+
+        function renderProfileForm() {
+            profileName.value = 'María López';
+            profilePhone.value = '+54 11 5555 4321';
+            profileEmail.value = 'maria.lopez@tododelivery.com';
+        }
+
+        function renderPaymentCards() {
+            paymentList.innerHTML = paymentCards.map((card) => `
+                <article class="payment-card">
+                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                        <div class="space-y-2">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <div class="font-extrabold text-lg">${card.name}</div>
+                                ${card.primary ? '<span class="payment-chip"><i data-lucide="star" class="w-4 h-4"></i>Principal</span>' : ''}
+                            </div>
+                            <div class="text-sm" style="color: var(--text-muted);">${card.brand} · ${card.number}</div>
+                            <div class="flex flex-wrap items-center gap-3 text-sm" style="color: var(--text-muted);">
+                                <span>Vence ${card.expiry}</span>
+                                <span>•</span>
+                                <span>${card.holder}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            ${card.primary ? '' : `<button type="button" class="pill-btn pill-secondary" data-set-primary="${card.id}">Usar como principal</button>`}
+                            <button type="button" class="icon-btn" data-remove-card="${card.id}" aria-label="Eliminar tarjeta">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+
+            lucide.createIcons();
+
+            document.querySelectorAll('[data-set-primary]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const cardId = Number(button.dataset.setPrimary);
+                    paymentCards = paymentCards.map((card) => ({
+                        ...card,
+                        primary: card.id === cardId
+                    }));
+                    renderPaymentCards();
+                    showToast('Método principal actualizado');
+                });
+            });
+
+            document.querySelectorAll('[data-remove-card]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const cardId = Number(button.dataset.removeCard);
+                    paymentCards = paymentCards.filter((card) => card.id !== cardId);
+
+                    if (!paymentCards.some((card) => card.primary) && paymentCards.length > 0) {
+                        paymentCards[0].primary = true;
+                    }
+
+                    renderPaymentCards();
+                    showToast('Tarjeta eliminada');
+                });
+            });
+        }
+
+        function renderSupportThread() {
+            supportThread.innerHTML = messageFeed.map((message) => `
+                <div class="bubble ${message.role}">${message.text}</div>
+            `).join('');
+            supportThread.scrollTop = supportThread.scrollHeight;
+        }
+
+        function openCardDialog() {
+            cardModal.classList.add('is-open');
+            cardModal.setAttribute('aria-hidden', 'false');
+            cardName.focus();
+        }
+
+        function closeCardDialog() {
+            cardModal.classList.remove('is-open');
+            cardModal.setAttribute('aria-hidden', 'true');
+            cardForm.reset();
+            cardDefault.checked = true;
+        }
+
+        loadTheme();
+        renderProfileForm();
+        renderPaymentCards();
+        renderSupportThread();
+
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+        photoInput.addEventListener('change', () => {
+            const file = photoInput.files && photoInput.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                profilePhoto.src = String(reader.result);
+                profilePhoto.classList.remove('hidden');
+                avatarFallback.classList.add('hidden');
+                showToast('Foto de perfil actualizada');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        profilePhone.addEventListener('input', () => {
+            profilePhone.value = normalizePhone(profilePhone.value);
+            phoneHelper.textContent = isValidPhone(profilePhone.value)
+                ? 'Número válido para contacto y seguimiento.'
+                : 'Acepta entre 8 y 15 dígitos. Se recomienda incluir código de país.';
+        });
+
+        profileForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            if (!profileName.value.trim() || !profileEmail.value.trim()) {
+                showToast('Completá nombre y correo para continuar');
+                return;
+            }
+
+            if (!isValidPhone(profilePhone.value)) {
+                showToast('El teléfono no parece válido');
+                return;
+            }
+
+            showToast('Datos personales guardados');
+        });
+
+        pushToggle.addEventListener('change', () => {
+            showToast(pushToggle.checked ? 'Notificaciones push activadas' : 'Notificaciones push desactivadas');
+        });
+
+        quickSupportOpen.addEventListener('click', () => {
+            supportChat.classList.toggle('hidden');
+            if (!supportChat.classList.contains('hidden')) {
+                supportMessage.focus();
+            }
+        });
+
+        supportForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const text = supportMessage.value.trim();
+            if (!text) {
+                showToast('Escribí tu consulta antes de enviar');
+                return;
+            }
+
+            messageFeed.push({ role: 'user', text });
+            renderSupportThread();
+            supportMessage.value = '';
+
+            window.setTimeout(() => {
+                messageFeed.push({
+                    role: 'agent',
+                    text: 'Recibimos tu mensaje. Estamos revisando el caso y te contactamos por este canal o por WhatsApp.'
+                });
+                renderSupportThread();
+            }, 650);
+        });
+
+        whatsappSupport.href = `https://wa.me/${supportNumber}?text=${encodeURIComponent('Hola, necesito ayuda con un pedido en Todo Delivery.')}`;
+
+        openCardModal.addEventListener('click', openCardDialog);
+        closeCardModal.addEventListener('click', closeCardDialog);
+        cancelCardModal.addEventListener('click', closeCardDialog);
+
+        cardModal.addEventListener('click', (event) => {
+            if (event.target === cardModal) {
+                closeCardDialog();
+            }
+        });
+
+        cardForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const digits = cardNumber.value.replace(/\D/g, '');
+
+            if (digits.length < 12 || digits.length > 19) {
+                showToast('El número de tarjeta no es válido');
+                return;
+            }
+
+            const nextCard = {
+                id: Date.now(),
+                name: cardName.value.trim(),
+                brand: cardBrand.value,
+                number: cardNumber.value.trim(),
+                expiry: cardExpiry.value.trim(),
+                holder: cardHolder.value.trim(),
+                primary: cardDefault.checked
+            };
+
+            if (nextCard.primary) {
+                paymentCards = paymentCards.map((card) => ({ ...card, primary: false }));
+            }
+
+            paymentCards = [nextCard, ...paymentCards];
+            renderPaymentCards();
+            closeCardDialog();
+            showToast('Tarjeta guardada correctamente');
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && cardModal.classList.contains('is-open')) {
+                closeCardDialog();
+            }
+        });
     </script>
 </body>
 </html>
